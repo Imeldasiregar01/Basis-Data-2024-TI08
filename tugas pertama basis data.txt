@@ -1,0 +1,200 @@
+Setting environment for using XAMPP for Windows.
+Imeldasiregar@LAPTOP-NVLB19JN c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 11
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> CREATE DATABASES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'DATABASES' at line 1
+MariaDB [(none)]> CREATE DATABASES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'DATABASES' at line 1
+MariaDB [(none)]> CREATE DATABASE db_kuliah;
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| db_kampus          |
+| db_kuliah          |
+| db_ti08            |
+| information_schema |
+| mysql              |
+| nama_database      |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+9 rows in set (0.001 sec)
+
+MariaDB [(none)]> USE db_kuliah;
+Database changed
+MariaDB [db_kuliah]> CREATE TABLE jenis(
+    -> id int primary key auto_increment,
+    -> nama varchar(30) not null unique);
+Query OK, 0 rows affected (0.039 sec)
+
+MariaDB [db_kuliah]> CREATE TABLE mahasiswa(
+    -> id int primary key auto_increment,
+    -> nim int not null,
+    -> nama varchar(30) not null unique,
+    -> alamat varchar(30) not null unique,
+    -> idjenis int not null references jenis(id),
+    -> foto varchar(30));
+Query OK, 0 rows affected (0.041 sec)
+
+MariaDB [db_kuliah]> SHOW TABLES;
++---------------------+
+| Tables_in_db_kuliah |
++---------------------+
+| jenis               |
+| mahasiswa           |
++---------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [db_kuliah]> DESC jenis;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nama  | varchar(30) | NO   | UNI | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.024 sec)
+
+MariaDB [db_kuliah]> DESC mahasiswa;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| id      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nim     | int(11)     | NO   |     | NULL    |                |
+| nama    | varchar(30) | NO   | UNI | NULL    |                |
+| alamat  | varchar(30) | NO   | UNI | NULL    |                |
+| idjenis | int(11)     | NO   |     | NULL    |                |
+| foto    | varchar(30) | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+6 rows in set (0.022 sec)
+
+MariaDB [db_kuliah]> INSERT INTO jenis VALUES
+    -> ('','teknik Informatika'),('','Sistem Informasi'),('','Bisnis Digital'),('','Kedokteran'),('','Pertanian');
+Query OK, 5 rows affected, 5 warnings (0.078 sec)
+Records: 5  Duplicates: 0  Warnings: 5
+
+MariaDB [db_kuliah]> SELECT * FROM jenis;
++----+--------------------+
+| id | nama               |
++----+--------------------+
+|  3 | Bisnis Digital     |
+|  4 | Kedokteran         |
+|  5 | Pertanian          |
+|  2 | Sistem Informasi   |
+|  1 | teknik Informatika |
++----+--------------------+
+5 rows in set (0.001 sec)
+
+MariaDB [db_kuliah]> INSERT INTO mahasiswa
+    -> (nim,nama,alamat,idjurusan,foto) VALUES
+    -> (23258,'Imelda','Medan',1,'imel.jpg'),
+    -> (23245,'Fadilah','Riau',2,'dila.jpg'),
+    -> (23264,'Zalsa','Jambi',3,'zalsa.jpg');
+ERROR 1054 (42S22): Unknown column 'idjurusan' in 'field list'
+MariaDB [db_kuliah]> INSERT INTO mahasiswa
+    -> (nim,nama,alamat,idjenis,foto) VALUES
+    -> (23258,'Imelda','Medan',1,'imel.jpg'),
+    -> (23245,'Fadilah','Riau',2,'dila.jpg'),
+    -> (23264,'Zalsa','Jambi',3,'zalsa.jpg');
+Query OK, 3 rows affected (0.006 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [db_kuliah]> SELECT * FROM mahasiswa;
++----+-------+---------+--------+---------+-----------+
+| id | nim   | nama    | alamat | idjenis | foto      |
++----+-------+---------+--------+---------+-----------+
+|  1 | 23258 | Imelda  | Medan  |       1 | imel.jpg  |
+|  2 | 23245 | Fadilah | Riau   |       2 | dila.jpg  |
+|  3 | 23264 | Zalsa   | Jambi  |       3 | zalsa.jpg |
++----+-------+---------+--------+---------+-----------+
+3 rows in set (0.001 sec)
+
+MariaDB [db_kuliah]> INSERT INTO mahasiswa
+    -> (nim,nama,alamat,idjenis,foto) VALUES
+    -> (23171,'Anggi','Palembang',4,'Anggi.jpg),
+    '> (23279,'Surya','padang',5,'surya.jpg');
+    '> ;
+    '> ,
+    '> .
+    '> ;
+    '> :
+    '> \q
+    '> ,
+    '> '
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Surya','padang',5,'surya.jpg');
+;
+,
+.
+;
+:
+\q
+,
+'' at line 3
+MariaDB [db_kuliah]> INSERT INTO mahasiswa
+    -> (nim,nama,alamat,idjenis,foto) VALUES
+    -> (23171,'Anggi','Palembang',4,'Anggi.jpg),
+    '> (23279,'Surya','padang',5,'surya.jpg');
+    '> '
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Surya','padang',5,'surya.jpg');
+'' at line 3
+MariaDB [db_kuliah]> INSERT INTO mahasiswa
+    -> (23171,'Anggi','Palembang',4,'anggi.jpg'),
+    -> (23279,'Surya','Padang',5,'surya.jpg');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '23171,'Anggi','Palembang',4,'anggi.jpg'),
+(23279,'Surya','Padang',5,'surya.jpg')' at line 2
+MariaDB [db_kuliah]> INSERT INTO mahasiswa
+    -> (nim,nama,alamat,idjenis,foto) VALUES
+    -> (23171,'Anggi','Palembang',4,'Anggi.jpg'),
+    -> (23279,'Surya','Padang',5,'surya.jpg');
+Query OK, 2 rows affected (0.005 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [db_kuliah]> SELECT * FROM mahasiswa;
++----+-------+---------+-----------+---------+-----------+
+| id | nim   | nama    | alamat    | idjenis | foto      |
++----+-------+---------+-----------+---------+-----------+
+|  1 | 23258 | Imelda  | Medan     |       1 | imel.jpg  |
+|  2 | 23245 | Fadilah | Riau      |       2 | dila.jpg  |
+|  3 | 23264 | Zalsa   | Jambi     |       3 | zalsa.jpg |
+|  4 | 23171 | Anggi   | Palembang |       4 | Anggi.jpg |
+|  5 | 23279 | Surya   | Padang    |       5 | surya.jpg |
++----+-------+---------+-----------+---------+-----------+
+5 rows in set (0.001 sec)
+
+MariaDB [db_kuliah]> SELECT nim,nama,idjenis,FROM mahasiswa;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM mahasiswa' at line 1
+MariaDB [db_kuliah]> SELECT nim,nama,idjenis FROM mahasiswa;
++-------+---------+---------+
+| nim   | nama    | idjenis |
++-------+---------+---------+
+| 23258 | Imelda  |       1 |
+| 23245 | Fadilah |       2 |
+| 23264 | Zalsa   |       3 |
+| 23171 | Anggi   |       4 |
+| 23279 | Surya   |       5 |
++-------+---------+---------+
+5 rows in set (0.001 sec)
+
+MariaDB [db_kuliah]> SELECT * FROM mahasiswa WHERE alamat='Medan';
++----+-------+--------+--------+---------+----------+
+| id | nim   | nama   | alamat | idjenis | foto     |
++----+-------+--------+--------+---------+----------+
+|  1 | 23258 | Imelda | Medan  |       1 | imel.jpg |
++----+-------+--------+--------+---------+----------+
+1 row in set (0.001 sec)
+
+MariaDB [db_kuliah]>
